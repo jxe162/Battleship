@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class BGE {
     /**
      * Battleship game engine or BGE implements a one player battleship game as a package
@@ -49,6 +51,8 @@ public class BGE {
         //TODO: add try catch to catch exception for too many attempts
         //TODO: replace setBoard here with a local variable such that setBoard is only set after all ships are placed
         for (int shipSize: shipSizes) {
+            if(shipSize>boardSize)
+                throw new IllegalArgumentException();
             setBoard = placeShip(setBoard, shipSize);
         }
 
@@ -66,9 +70,34 @@ public class BGE {
      * @param shipSize: size of ship to be placed
      */
     private boolean[][] placeShip(boolean[][] testBoard, int shipSize){
-        //TODO: select random boolean for direction; 2 random ints for position with sizes adjusted based on
-        // boardSize and ship size check if ship intersects with any other ships and retry if so; when location
-        // found then change given board to add ship
+        //initial values; won't be included on board
+        boolean shipFound=false;
+        boolean dir = true;
+        int row=0;
+        int col=0;
+        Random random = new Random();
+        
+        
+        //keep retrying to find random placement for ship
+        //TODO: set limit for number of tries and throw exception when reached
+        while(!shipFound){
+            //Uses Math.random to select random direction and position; adjusts to not go out of bounds
+            dir = random.nextBoolean();
+            row = dir ? random.nextInt(boardSize) : random.nextInt(boardSize-shipSize);
+            col = !dir ? random.nextInt(boardSize) : random.nextInt(boardSize-shipSize);
+            
+            shipFound = checkShip(testBoard, shipSize, row, col, dir);
+        }
+        
+        //edit board to add ship
+        for (int i = 0; i < shipSize; i++) {
+            if(dir){
+                testBoard[row][col+i] = true;
+            }
+            else{
+                testBoard[row+i][col] = true;
+            }
+        }
 
         return testBoard;
     }
@@ -121,7 +150,7 @@ public class BGE {
         for(int i=0; i<setBoard.length;i++){
             for (int j = 0; j < setBoard[0].length; j++) {
                 str.append("[");
-                str.append(setBoard[i][j]);
+                str.append((setBoard[i][j] ? "X":"O"));
                 str.append("] ");
             }
             str.append("\n");
@@ -157,6 +186,12 @@ public class BGE {
      */
     public boolean testcheckShip(boolean[][] board, int shipSize, int r, int c, boolean dir){
         return checkShip(board,shipSize,r,c,dir);
+    }
+    public boolean[][] placeShipTest(boolean[][] board, int shipSize){
+        return placeShip(board,shipSize);
+    }
+    public void setBoardSize(int s){
+        boardSize=s;
     }
 
 }

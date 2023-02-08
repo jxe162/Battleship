@@ -32,6 +32,25 @@ public class TestBGE {
 		
 		
 	}
+	
+	@Test
+	public void testPlaceShip(){
+		boolean[][] board = new boolean[][]
+				{		{false, false, false, false, false, false, false, false},
+						{false, false, false, true, false, false, false, false},
+						{false, false, false, true, false, false, false, false},
+						{false, false, false, true, false, false, true, true},
+						{false, false, false, false, false, false, false, false},
+						{false, true, true, true, true, false, false, false},
+						{false, false, false, false, false, false, false, false},
+						{false, false, false, false, false, false, false, false}
+				};
+		BGE bge = new BGE();
+		bge.setBoardSize(8);
+		
+		System.out.println(bge.toString(bge.placeShipTest(board, 2)));
+		
+	}
 	public static void main(String[] args) {
 		TestBGE tbge = new TestBGE();
 		tbge.testCheckShip();
