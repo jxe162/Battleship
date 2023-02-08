@@ -21,7 +21,17 @@ public class BGE {
     private char[][] playBoard;         //game board to show player with hits and misses
     private int boardSize;              //size of board
     private int[] shipSizes;            //array of ship sizes
+    private int hits;
+    private int misses;
 
+    
+    public BGE(){
+        hits=0;
+        misses=0;
+        boardSize=8;
+        shipSizes = new int[]{2, 3, 4};
+    
+    }
     /**
      * Caller can invoke a startGame() function to begin a 1-player game.
      * This function will generate a 8x8 game board consisting of 3 ships having a width of one square and a length of:
@@ -33,9 +43,7 @@ public class BGE {
      *
      */
     public void startGame(){
-        // initialize global variables
-        boardSize=8;
-        shipSizes = new int[]{2, 3, 4};
+        // initialize boards
         setBoard = new boolean[boardSize][boardSize];
         playBoard = new char[boardSize][boardSize];
 
@@ -140,8 +148,19 @@ public class BGE {
     public boolean shoot(int r, int c){
         //checks setBoard if player hits or misses; adjust playBoard to reflect results; adjusts setBoard to be false
         boolean hitShip = setBoard[r][c];
-        if(playBoard[r][c] == ' ')
-            playBoard[r][c] = hitShip ? 'X' : 'O';
+        if(playBoard[r][c] == ' ') {
+            if(hitShip){
+                playBoard[r][c] = 'X';
+                hits++;
+            }
+            else{
+                playBoard[r][c] = 'O';
+                misses++;
+            }
+        }
+        else{
+            misses++;
+        }
         setBoard[r][c] = false;
         return hitShip;
         
