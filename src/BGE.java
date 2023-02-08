@@ -5,8 +5,8 @@ public class BGE {
      *
      *
      * setBoard:    game board with battleships placed; not to be seen by player
-     *              0 means no ship in cell
-     *              1 means ship in cell
+     *              false means no ship in cell
+     *              true means ship in cell
      *
      * playBoard:   game board to show player with hits and misses
      *              initialized to all O
@@ -14,12 +14,14 @@ public class BGE {
      *              if targeted and hit then an X
      */
 
-    private int[][] setBoard;      //game board with battleships placed; not to be seen by player
+    private boolean[][] setBoard;       //game board with battleships placed; not to be seen by player
     private char[][] playBoard;     //game board to show player with hits and misses
+    private int boardSize;      //size of board
+    private int[] ships;            //array of ship sizes
 
     /**
      * Caller can invoke a startGame() function to begin a 1-player game.
-     * This function will generate an 8x8 game board consisting of 3 ships having a width of one square and a length of:
+     * This function will generate a 8x8 game board consisting of 3 ships having a width of one square and a length of:
      *     Destroyer: 2 squares
      *     Cruiser: 3 squares
      *     Battleship: 4 squares
@@ -28,8 +30,17 @@ public class BGE {
      *
      */
     public void startGame(){
-        setBoard = new int[8][8];
-        playBoard = new char[8][8];
+        boardSize=8;
+        setBoard = new boolean[boardSize][boardSize];
+        playBoard = new char[boardSize][boardSize];
+        ships = new int[]{2, 3, 4};
+
+        for(int i=0; i<boardSize;i++){
+            for (int j = 0; j < boardSize; j++) {
+                playBoard[i][j] = 'O';
+                setBoard[i][j]=false;
+            }
+        }
 
 
     }
