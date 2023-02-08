@@ -51,6 +51,21 @@ public class TestBGE {
 		System.out.println(bge.toString(bge.placeShipTest(board, 2)));
 		
 	}
+	
+	@Test
+	public void testShoot(){
+		BGE bge = new BGE();
+		bge.startGame();
+		bge.showCheatBoard();
+		bge.shoot(1,3);
+		bge.shoot(3,3);
+		bge.shoot(5,7);
+		bge.shoot(2,1);
+		bge.shoot(0,0);
+		bge.shoot(7,7);
+		System.out.println(bge.showBoard());
+		
+	}
 	public static void main(String[] args) {
 		TestBGE tbge = new TestBGE();
 		tbge.testCheckShip();

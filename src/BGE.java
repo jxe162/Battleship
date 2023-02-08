@@ -11,8 +11,8 @@ public class BGE {
      *              true means ship in cell
      *
      * playBoard:   game board to show player with hits and misses
-     *              initialized to all O
-     *              if targeted but no hit then a space
+     *              initialized to all empty space
+     *              if targeted but no hit then an O
      *              if targeted and hit then an X
      */
 
@@ -42,7 +42,7 @@ public class BGE {
         //initialize values within 2d arrays
         for(int i=0; i<boardSize;i++){
             for (int j = 0; j < boardSize; j++) {
-                playBoard[i][j] = 'O';
+                playBoard[i][j] = ' ';
                 setBoard[i][j]=false;
             }
         }
@@ -113,6 +113,7 @@ public class BGE {
      */
     private boolean checkShip(boolean[][] board, int shipSize, int r, int c, boolean dir){
         //iterates over length of ship starting at given in either row or column depending on direction
+        //immediatly returns false if ship is present; otherwise returns true
         for (int i = 0; i < shipSize; i++) {
             if(dir){
                 if(board[r][c+i])
@@ -135,8 +136,17 @@ public class BGE {
      * @param c: column number to shoot at
      */
     public void shoot(int r, int c){
-        //TODO: check setBoard if player hits or misses; adjust playBoard to reflect results
-
+        //checks setBoard if player hits or misses; adjust playBoard to reflect results
+        playBoard[r][c] = setBoard[r][c] ? 'X' : 'O';
+        
+    }
+    
+    /**
+     *  string of board to show player
+     * @return: string representation of playBoard
+     */
+    public String showBoard(){
+        return toString(playBoard);
     }
     
     
@@ -150,8 +160,8 @@ public class BGE {
         for(int i=0; i<setBoard.length;i++){
             for (int j = 0; j < setBoard[0].length; j++) {
                 str.append("[");
-                str.append((setBoard[i][j] ? "X":"O"));
-                str.append("] ");
+                str.append((setBoard[i][j] ? "X":" "));
+                str.append("]");
             }
             str.append("\n");
         }
@@ -192,6 +202,10 @@ public class BGE {
     }
     public void setBoardSize(int s){
         boardSize=s;
+    }
+    
+    public void showCheatBoard(){
+        System.out.println(toString(setBoard));
     }
 
 }
