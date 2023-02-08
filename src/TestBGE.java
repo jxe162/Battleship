@@ -4,11 +4,11 @@ import org.junit.Test;
 public class TestBGE {
 	/**
 	 * checks if ship would overlap with any ships already on the board
-	 *      * @param board: boolean[][] with preexisiting ships on it
+	 *      * @param board: boolean[][] with preexisting ships on it
 	 *      * @param shipSize: length of ship
 	 *      * @param r: start row on board
 	 *      * @param c: start column on board
-	 *      * @param dir: true is horizontal; false if veritcal
+	 *      * @param dir: true is horizontal; false if vertical
 	 *      * @return true if ship can be placed at location without hitting another ship; false if hits a ship
 	 */
 	@Test
@@ -25,10 +25,10 @@ public class TestBGE {
 		};
 		BGE bge = new BGE();
 		
-		Assert.assertFalse(bge.testcheckShip(board, 3, 1, 1, true));
-		Assert.assertFalse(bge.testcheckShip(board, 3, 1, 6, false));
-		Assert.assertTrue(bge.testcheckShip(board, 3, 1, 1, false));
-		Assert.assertTrue(bge.testcheckShip(board, 3, 6, 1, true));
+		Assert.assertFalse(bge.checkShipTest(board, 3, 1, 1, true));
+		Assert.assertFalse(bge.checkShipTest(board, 3, 1, 6, false));
+		Assert.assertTrue(bge.checkShipTest(board, 3, 1, 1, false));
+		Assert.assertTrue(bge.checkShipTest(board, 3, 6, 1, true));
 		
 		
 	}
@@ -63,6 +63,7 @@ public class TestBGE {
 		bge.shoot(2,1);
 		bge.shoot(0,0);
 		bge.shoot(7,7);
+		System.out.println(bge.isGameOver());
 		System.out.println(bge.showBoard());
 		
 	}

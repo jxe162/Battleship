@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Random;
 
 public class BGE {
@@ -47,7 +48,7 @@ public class BGE {
             }
         }
 
-        //attempt to place ships in testboard
+        //attempt to place ships in test board
         //TODO: add try catch to catch exception for too many attempts
         //TODO: replace setBoard here with a local variable such that setBoard is only set after all ships are placed
         for (int shipSize: shipSizes) {
@@ -104,16 +105,16 @@ public class BGE {
     
     /**
      * checks if ship would overlap with any ships already on the board
-     * @param board: boolean[][] with preexisiting ships on it
+     * @param board: boolean[][] with preexisting ships on it
      * @param shipSize: length of ship
      * @param r: start row on board
      * @param c: start column on board
-     * @param dir: true is horizontal; false if veritcal
+     * @param dir: true is horizontal; false if vertical
      * @return true if ship can be placed at location without hitting another ship; false if hits a ship
      */
     private boolean checkShip(boolean[][] board, int shipSize, int r, int c, boolean dir){
         //iterates over length of ship starting at given in either row or column depending on direction
-        //immediatly returns false if ship is present; otherwise returns true
+        //immediately returns false if ship is present; otherwise returns true
         for (int i = 0; i < shipSize; i++) {
             if(dir){
                 if(board[r][c+i])
@@ -134,10 +135,15 @@ public class BGE {
      *
      * @param r: row number to shoot at
      * @param c: column number to shoot at
+     * @return returns true if a ship was hit and false if no ship was hit or a cell was hit previously
      */
-    public void shoot(int r, int c){
-        //checks setBoard if player hits or misses; adjust playBoard to reflect results
-        playBoard[r][c] = setBoard[r][c] ? 'X' : 'O';
+    public boolean shoot(int r, int c){
+        //checks setBoard if player hits or misses; adjust playBoard to reflect results; adjusts setBoard to be false
+        boolean hitShip = setBoard[r][c];
+        if(playBoard[r][c] == ' ')
+            playBoard[r][c] = hitShip ? 'X' : 'O';
+        setBoard[r][c] = false;
+        return hitShip;
         
     }
     
@@ -149,6 +155,16 @@ public class BGE {
         return toString(playBoard);
     }
     
+    public boolean isGameOver(){
+        for (boolean[] row: setBoard) {
+            for (boolean cell: row) {
+                if (cell)
+                    return false;
+            }
+            
+        }
+        return true;
+    }
     
     /**
      * toString method for the set boards; should not be shown to player
@@ -194,7 +210,7 @@ public class BGE {
     /**
      * follow methods are only to allow access to private methods for testing
      */
-    public boolean testcheckShip(boolean[][] board, int shipSize, int r, int c, boolean dir){
+    public boolean checkShipTest(boolean[][] board, int shipSize, int r, int c, boolean dir){
         return checkShip(board,shipSize,r,c,dir);
     }
     public boolean[][] placeShipTest(boolean[][] board, int shipSize){
