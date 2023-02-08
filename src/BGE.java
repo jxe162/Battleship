@@ -72,6 +72,30 @@ public class BGE {
 
         return testBoard;
     }
+    
+    /**
+     * checks if ship would overlap with any ships already on the board
+     * @param board: boolean[][] with preexisiting ships on it
+     * @param shipSize: length of ship
+     * @param r: start row on board
+     * @param c: start column on board
+     * @param dir: true is horizontal; false if veritcal
+     * @return true if ship can be placed at location without hitting another ship; false if hits a ship
+     */
+    private boolean checkShip(boolean[][] board, int shipSize, int r, int c, boolean dir){
+        //iterates over length of ship starting at given in either row or column depending on direction
+        for (int i = 0; i < shipSize; i++) {
+            if(dir){
+                if(!board[r+i][c])
+                    return false;
+            }
+            else{
+                if(!board[r][c+i])
+                    return false;
+            }
+        }
+        return true;
+    }
 
     /**
      * Caller can invoke a shoot() function passing the target row and column coordinates of the targeted cell on the game board.
