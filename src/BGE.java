@@ -155,7 +155,13 @@ public class BGE {
         return toString(playBoard);
     }
     
+    /**
+     * game is over when player has hit all ships and wins
+     * @return true if game is over; false otherwise
+     */
     public boolean isGameOver(){
+        //iterates over setBoard to see if there are any spots with ships on it
+        //note in shoot we change squares to false if its hit
         for (boolean[] row: setBoard) {
             for (boolean cell: row) {
                 if (cell)
