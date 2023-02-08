@@ -86,11 +86,11 @@ public class BGE {
         //iterates over length of ship starting at given in either row or column depending on direction
         for (int i = 0; i < shipSize; i++) {
             if(dir){
-                if(!board[r+i][c])
+                if(board[r][c+i])
                     return false;
             }
             else{
-                if(!board[r][c+i])
+                if(board[r+i][c])
                     return false;
             }
         }
@@ -145,6 +145,18 @@ public class BGE {
             str.append("\n");
         }
         return str.toString();
+    }
+    
+    
+    
+    
+    
+    
+    /**
+     * follow methods are only to allow access to private methods for testing
+     */
+    public boolean testcheckShip(boolean[][] board, int shipSize, int r, int c, boolean dir){
+        return checkShip(board,shipSize,r,c,dir);
     }
 
 }
