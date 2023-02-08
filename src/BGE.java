@@ -15,9 +15,9 @@ public class BGE {
      */
 
     private boolean[][] setBoard;       //game board with battleships placed; not to be seen by player
-    private char[][] playBoard;     //game board to show player with hits and misses
-    private int boardSize;      //size of board
-    private int[] ships;            //array of ship sizes
+    private char[][] playBoard;         //game board to show player with hits and misses
+    private int boardSize;              //size of board
+    private int[] shipSizes;            //array of ship sizes
 
     /**
      * Caller can invoke a startGame() function to begin a 1-player game.
@@ -30,11 +30,14 @@ public class BGE {
      *
      */
     public void startGame(){
+        // initialize global variables
         boardSize=8;
+        shipSizes = new int[]{2, 3, 4};
         setBoard = new boolean[boardSize][boardSize];
         playBoard = new char[boardSize][boardSize];
-        ships = new int[]{2, 3, 4};
 
+
+        //initialize values within 2d arrays
         for(int i=0; i<boardSize;i++){
             for (int j = 0; j < boardSize; j++) {
                 playBoard[i][j] = 'O';
@@ -42,7 +45,32 @@ public class BGE {
             }
         }
 
+        //attempt to place ships in testboard
+        //TODO: add try catch to catch exception for too many attempts
+        //TODO: replace setBoard here with a local variable such that setBoard is only set after all ships are placed
+        for (int shipSize: shipSizes) {
+            setBoard = placeShip(setBoard, shipSize);
+        }
 
+
+    }
+
+
+    /**
+     * edits setBoard to place ship of given size. Does so by:
+     *          randomly selects direction (horizontal or vertical) and position
+     *          check if able to place ship there
+     *          if able, edit setBoard to true where ship is
+     *          if unable, retry until able
+     *          if after 50 tries, ship is unable to be placed, throw error
+     * @param shipSize: size of ship to be placed
+     */
+    private boolean[][] placeShip(boolean[][] testBoard, int shipSize){
+        //TODO: select random boolean for direction; 2 random ints for position with sizes adjusted based on
+        // boardSize and ship size check if ship intersects with any other ships and retry if so; when location
+        // found then change given board to add ship
+
+        return testBoard;
     }
 
     /**
@@ -54,7 +82,45 @@ public class BGE {
      * @param c: column number to shoot at
      */
     public void shoot(int r, int c){
+        //TODO: check setBoard if player hits or misses; adjust playBoard to reflect results
 
+    }
+    
+    
+    /**
+     * toString method for the set boards; should not be shown to player
+     * @param setBoard: boolean board to print
+     * @return string representation of boolean array
+     */
+    public String toString(boolean[][] setBoard){
+        StringBuilder str = new StringBuilder();
+        for(int i=0; i<setBoard.length;i++){
+            for (int j = 0; j < setBoard[0].length; j++) {
+                str.append("[");
+                str.append(setBoard[i][j]);
+                str.append("] ");
+            }
+            str.append("\n");
+        }
+        return str.toString();
+    }
+    
+    /**
+     * toString method for play Board; can be shown to player
+     * @param playBoard: char 2d array to string
+     * @return string representation of char array
+     */
+    public String toString(char[][] playBoard){
+        StringBuilder str = new StringBuilder();
+        for(int i=0; i<playBoard.length;i++){
+            for (int j = 0; j < playBoard[0].length; j++) {
+                str.append("[");
+                str.append(playBoard[i][j]);
+                str.append("]");
+            }
+            str.append("\n");
+        }
+        return str.toString();
     }
 
 }
