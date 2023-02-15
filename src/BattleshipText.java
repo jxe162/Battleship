@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class BattleshipDriver {
+public class BattleshipText {
 	private static BGE bge;
 	private static Scanner reader;
 	
