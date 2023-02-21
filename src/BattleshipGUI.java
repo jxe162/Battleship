@@ -4,11 +4,10 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class BattleshipGUI extends JPanel{
-	public JLabel labelText;
-	public JButton btn;
 	private BGE bge;
 	private static final int BORDER = 2, squareSize=50;
-	private static final Color Hit=Color.red, Miss=Color.gray;
+	private static final Color Hit=Color.red, Miss=Color.gray, Neuter=Color.white;
+	private JFrame gameFrame, winFrame;
 	
 	public BattleshipGUI() {
 		bge =  new BGE();
@@ -23,18 +22,30 @@ public class BattleshipGUI extends JPanel{
 	}
 	
 	public void initBoard() {
-		JFrame f = new JFrame("Battleship Board");
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setLayout(new GridBagLayout());
-		f.add(this);
-		f.pack();
-		f.setVisible(true);
+		gameFrame = new JFrame("Battleship Board");
+		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		gameFrame.setLayout(new GridBagLayout());
+		gameFrame.add(this);
+		gameFrame.pack();
+		gameFrame.setVisible(true);
+	}
+	
+	public void winGame(){
+		winFrame = new JFrame("Congrats");
+		winFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		winFrame.add(new JLabel("Congrats!!! \nYou Won!!!"));
+		winFrame.setSize(new Dimension(200,100));
+		winFrame.setVisible(true);
+		gameFrame.setVisible(false);
+		gameFrame.dispose();
+		
 	}
 	
 	
 	public JButton makeButton(int row, int col){
 		JButton square = new JButton();
 		square.setPreferredSize(new Dimension(squareSize, squareSize));
+		square.setBackground(Neuter);
 		square.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -45,11 +56,18 @@ public class BattleshipGUI extends JPanel{
 				else {
 					square.setBackground(Miss);
 				}
+				if(bge.isGameOver()){
+					winGame();
+				}
 				square.removeActionListener(this);
 				
 			}
 		});
 		return square;
+	}
+	
+	public void run(){
+	
 	}
 	
 	public static void main(String[] args) {
