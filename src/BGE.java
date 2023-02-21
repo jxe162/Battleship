@@ -18,7 +18,7 @@ public class BGE {
      */
 
     private boolean[][] setBoard;       //game board with battleships placed; not to be seen by player
-    private char[][] playBoard;         //game board to show player with hits and misses
+    private char[][] playBoard;         //game board to show player with hits and misses with text game
     private int boardSize;              //size of board
     private int[] shipSizes;            //array of ship sizes
     private int hits;
@@ -166,6 +166,18 @@ public class BGE {
         
     }
     
+    public int getBoardSize(){
+        return boardSize;
+    }
+    
+    public String gameStats(){
+        return "'{\"hits\":" +
+                hits +
+                ", \"misses\":" +
+                misses +
+                "}'";
+    }
+    
     /**
      *  string of board to show player
      * @return: string representation of playBoard
@@ -191,6 +203,10 @@ public class BGE {
         return true;
     }
     
+    public char[][] getPlayerBoard(){
+        return playBoard;
+    }
+    
     /**
      * toString method for the set boards; should not be shown to player
      * @param setBoard: boolean board to print
@@ -198,10 +214,10 @@ public class BGE {
      */
     public String toString(boolean[][] setBoard){
         StringBuilder str = new StringBuilder();
-        for(int i=0; i<setBoard.length;i++){
+        for (boolean[] booleans : setBoard) {
             for (int j = 0; j < setBoard[0].length; j++) {
                 str.append("[");
-                str.append((setBoard[i][j] ? "X":" "));
+                str.append((booleans[j] ? "X" : " "));
                 str.append("]");
             }
             str.append("\n");
@@ -216,10 +232,10 @@ public class BGE {
      */
     public String toString(char[][] playBoard){
         StringBuilder str = new StringBuilder();
-        for(int i=0; i<playBoard.length;i++){
+        for (char[] chars : playBoard) {
             for (int j = 0; j < playBoard[0].length; j++) {
                 str.append("[");
-                str.append(playBoard[i][j]);
+                str.append(chars[j]);
                 str.append("]");
             }
             str.append("\n");
