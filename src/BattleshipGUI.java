@@ -31,10 +31,10 @@ public class BattleshipGUI extends JPanel{
 	}
 	
 	public void winGame(){
-		winFrame = new JFrame("Congrats");
+		winFrame = new JFrame("You Win");
 		winFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		winFrame.add(new JLabel("Congrats!!! \nYou Won!!!"));
-		winFrame.setSize(new Dimension(200,100));
+		winFrame.pack();
 		winFrame.setVisible(true);
 		gameFrame.setVisible(false);
 		gameFrame.dispose();
@@ -64,10 +64,6 @@ public class BattleshipGUI extends JPanel{
 			}
 		});
 		return square;
-	}
-	
-	public void run(){
-	
 	}
 	
 	public static void main(String[] args) {
